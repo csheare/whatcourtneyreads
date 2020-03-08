@@ -1,0 +1,10 @@
+data
+.venv
+.env
+*.txt
+*.npy
+*.csv
+*.json
+*.pyc
+__pycache__
+instance/
