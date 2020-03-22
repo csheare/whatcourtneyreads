@@ -52,6 +52,7 @@ class Game extends React.Component {
       }],
       stepNumber: 0,
       xIsNext: true,
+      responseMove: '',
     };
   }
 
@@ -65,24 +66,52 @@ class Game extends React.Component {
     squares[i] =  this.state.xIsNext ? 'X' : 'O';
 
     this.lastRequestCancelSource = axios.CancelToken.source();
-    var currentPlayer = this.state.xIsNext ? 1: 0;
+    const currentPlayer = this.state.xIsNext ? 1: 0;
 
-    axios
-      .get("http://localhost:5000/", {
-        params:{
-          player: currentPlayer,
-          move: squares[i]
-        },
-        cancelToken: this.lastRequestCancelSource.token
-      });
+    // axios
+    //   .get("http://localhost:5000/", {
+    //     params:{
+    //       player: currentPlayer,
+    //       move: squares[i]
+    //     },
+    //     cancelToken: this.lastRequestCancelSource.token
+    //   });
 
-    this.setState({
-      history: history.concat([{
-        squares: squares,
-      }]),
-      stepNumber: history.length,
-      xIsNext: !this.state.xIsNext
-    });
+    //http://localhost:5000?player=cole&move=x
+
+    const params = {
+      player: currentPlayer,
+      move: squares[i]
+    }
+
+    fetch('http://localhost:5000/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(params)
+    })
+    // you always need to parse the initial response first
+    // with the .json which returns a promise yo
+    .then((response) => {
+      console.log(response);
+      // .json() is a function that returns a promise
+      // and when called on response it takes that
+      // info into account when making the promise
+      return response.json()
+    })
+    .then((jsonBody) => {
+      console.log(jsonBody)  
+      this.setState({ responseMove: jsonBody.move });
+      this.setState({
+        history: history.concat([{
+          squares: squares,
+        }]),
+        stepNumber: history.length,
+        xIsNext: !this.state.xIsNext
+      });    
+    })
+
   }
 
   jumpTo(step) {
@@ -118,18 +147,23 @@ class Game extends React.Component {
     }
 
     return (
+      <div>
         <div className="game">
-        <div className="game-board">
-          <Board 
-            squares={current.squares}
-            onClick={(i) => this.handleClick(i)}
-          />
+          <div className="game-board">
+            <Board 
+              squares={current.squares}
+              onClick={(i) => this.handleClick(i)}
+            />
+          </div>
+          <div className="game-info">
+            <div>{status}</div>
+            <ol>{moves}</ol>
+          </div>
         </div>
-        <div className="game-info">
-          <div>{status}</div>
-          <ol>{moves}</ol>
+        <div>
+          Response Move: { this.state.responseMove }
         </div>
-      </div>
+      </div>      
     );
   }
 }

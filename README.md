@@ -27,6 +27,16 @@ pip install -r requirements.txt
 
 ```
 
+# Get that Database going girl?
+
+```
+Its dangerous to go alone, take this!
+export DATABASE_URL="postgresql:///whatcourtneyreads"
+
+``` 
+
+
+
 # Running the app 
 
 ```sh
