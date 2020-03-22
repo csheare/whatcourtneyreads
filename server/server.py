@@ -23,10 +23,19 @@ from book import Book
 # 	return jsonify(body)
 
 
-# @app.route('/books', methods=['GET'])
-# def book():
-# 	return Book()
+@app.route('/books', methods=['GET'])
+def get_books():
+	books = Book.query.all()
+	results = [ 
+	{
+		'title': book.title,
+		'author': book.author,
+		'start': book.start,
+		'end': book.end
+	}
+	for book in books]
+	return {'books': results}
 
 @app.route('/')
-def book():
+def hello():
 	return "hello"
