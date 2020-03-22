@@ -32,7 +32,7 @@ pip install -r requirements.txt
 ```
 Its dangerous to go alone, take this!
 export DATABASE_URL="postgresql:///whatcourtneyreads"
-
+export APP_SETTINGS="config.DevelopmentConfig"
 ``` 
 
 
