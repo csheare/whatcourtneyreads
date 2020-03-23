@@ -3,12 +3,27 @@ import ReactDOM from 'react-dom';
 import axios from "axios";
 import './index.css';
 
+function Book(){
+	return(
+		<p> This is a great book! </p>
+	);
+}
+
 class Timeline extends React.Component {
 	render() {
 		return (
-			<button onClick={function() { alert('click'); }}>
-			click me
-			</button>
+			<div>
+				<div>	
+					<h1>
+						<Book />
+					</h1>
+				</div>
+				<div>
+					<button onClick={() => alert('click')}>
+						click me
+					</button>
+				</div>
+			</div>
 		);
 	}
 }
@@ -22,6 +37,8 @@ class Timeline extends React.Component {
     //   });
 
 // ========================================
+
+
 
 ReactDOM.render(
 	<Timeline />,
