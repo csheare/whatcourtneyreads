@@ -26,8 +26,9 @@ from book import Book
 def new_books():
 	body = json.loads(request.data)
 	# print the book
+	print(body)
 	# write the book to the db 
-	return jsonify(body)
+	#return jsonify(body)
 
 
 
