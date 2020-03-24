@@ -13,18 +13,33 @@ class Timeline extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: '',
-      author: '',
-      start: '',
-      end: ''
+        title: '',
+        author: '',
+        start: '',
+        end: ''
     };
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleTitleChange = this.handleTitleChange.bind(this);
+    this.handleAuthorChange = this.handleAuthorChange.bind(this);
+    this.handleStartChange = this.handleStartChange.bind(this);
+    this.handleEndChange = this.handleEndChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(event) {
-    this.setState({value: event.target.value});
+  handleTitleChange(event) {
+    this.setState({title: event.target.value});
+  }
+
+  handleAuthorChange(event) {
+    this.setState({ author: event.target.value});
+  }
+
+  handleStartChange(event) {
+    this.setState({start: event.target.value});
+  }
+
+  handleEndChange(event) {
+    this.setState({end: event.target.value});
   }
 
   handleSubmit(event) {
@@ -32,11 +47,13 @@ class Timeline extends React.Component {
     axios
       .get("http://localhost:5000/new_book", {
         params:{
-          title: this.state.value
+          title: this.state.title.value,
+          author: this.state.author.value,
+          start: this.state.start.value,
+          end: this.state.end.value
         },
         cancelToken: this.lastRequestCancelSource.token
       });
-    alert('A name was submitted: ' + this.state.value);
     event.preventDefault();
   }
 
@@ -52,48 +69,35 @@ class Timeline extends React.Component {
 					<form onSubmit={this.handleSubmit}>
 						<label for="title">
               Book Title:
-               <input type="text" value={this.state.title} onChange={this.handleChange}/>
+               <input type="text" onChange={this.handleTitleChange}/>
             </label>
 						<br></br>
 
             <label for="author">
                 Author Name:
-               <input type="text" value={this.state.author} onChange={this.handleChange}/>
+               <input type="text" onChange={this.handleAuthorChange}/>
             </label>
             <br></br>
 
             <label for="start">
                 Start:
-               <input type="text" value={this.state.start} onChange={this.handleChange}/>
+               <input type="text" onChange={this.handleStartChange}/>
             </label>
             <br></br>
 
             <label for="end">
                 End:
-               <input type="text" value={this.state.end} onChange={this.handleChange}/>
+               <input type="text" onChange={this.handleEndChange}/>
             </label>
             <br></br>
 
-  						<input type="submit" value="Submit" />
+  					<input type="submit" value="Submit" />
 					</form>
 				</div>
 			</div>
 		);
 	}
 }
-
-  						// <label for="author">Author:</label><br></br>
-  						// <input type="text" id="author" name="author"/><br></br>
-  						// <label for="start">Start:</label><br></br>
-  						// <input type="date" id="start" name="start"/><br></br>
-    // axios
-    //   .get("http://localhost:5000/", {
-    //     params:{
-    //       player: currentPlayer,
-    //       move: squares[i]
-    //     },
-    //     cancelToken: this.lastRequestCancelSource.token
-    //   });
 
 // ========================================
 

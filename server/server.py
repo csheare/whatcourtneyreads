@@ -26,7 +26,7 @@ from book import Book
 # 	print(f'Player {player} played an {move}')
 # 	return jsonify(body)
 
-@app.route('/new_book', methods=['POST'])
+@app.route('/new_book', methods=['GET'])
 def new_books():
 	body = json.loads(request.data)
 	# print the book
