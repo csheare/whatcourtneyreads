@@ -5,10 +5,14 @@ from flask_cors import CORS
 import json
 import os
 
+from dotenv import load_dotenv
+load_dotenv()
+
 app = Flask(__name__)
 
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 db = SQLAlchemy(app)
 CORS(app)
 

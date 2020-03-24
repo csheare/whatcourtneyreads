@@ -12,7 +12,12 @@ function Book(){
 class Timeline extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {value: ''};
+    this.state = {
+      title: '',
+      author: '',
+      start: '',
+      end: ''
+    };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -46,10 +51,29 @@ class Timeline extends React.Component {
 				<div>
 					<form onSubmit={this.handleSubmit}>
 						<label for="title">
-							Book Title:
-							 <input type="text" value={this.state.value} onChange={this.handleChange}/>
-						</label>
+              Book Title:
+               <input type="text" value={this.state.title} onChange={this.handleChange}/>
+            </label>
 						<br></br>
+
+            <label for="author">
+                Author Name:
+               <input type="text" value={this.state.author} onChange={this.handleChange}/>
+            </label>
+            <br></br>
+
+            <label for="start">
+                Start:
+               <input type="text" value={this.state.start} onChange={this.handleChange}/>
+            </label>
+            <br></br>
+
+            <label for="end">
+                End:
+               <input type="text" value={this.state.end} onChange={this.handleChange}/>
+            </label>
+            <br></br>
+
   						<input type="submit" value="Submit" />
 					</form>
 				</div>
