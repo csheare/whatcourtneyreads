@@ -29,9 +29,16 @@ from book import Book
 @app.route('/new_book', methods=['POST'])
 def new_books():
 	body = json.loads(request.data)
+	title, author, start, end = body['params']['title'],\
+								body['params']['author'],\
+								body['params']['start'], \
+								body['params']['end']
 	# print the book
-	print(body)
+	new_book = Book(title, author, start, end)
+	db.session.add(new_book)
+	db.session.commit()
 	# write the book to the db 
+
 	return jsonify(body)
 
 
