@@ -26,13 +26,13 @@ from book import Book
 # 	print(f'Player {player} played an {move}')
 # 	return jsonify(body)
 
-@app.route('/new_book', methods=['GET'])
+@app.route('/new_book', methods=['POST'])
 def new_books():
 	body = json.loads(request.data)
 	# print the book
 	print(body)
 	# write the book to the db 
-	#return jsonify(body)
+	return jsonify(body)
 
 
 
