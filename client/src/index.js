@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Form, Button} from "react-bootstrap";
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
 import axios from "axios";
 import './index.css';
 
@@ -94,6 +97,7 @@ class BookForm extends React.Component {
             <Button variant="primary" type="submit">
               Submit
             </Button>
+            <br />
           </Form> 
 				</div>
 			</div>
@@ -130,19 +134,22 @@ class BookCards extends React.Component {
       return <div>Loading...</div>;
     } else {
         return (
-          <ul>
+          <div>
             {books_list.map(item => (
-              <li key={item.title}>
-                {item.title} by {item.author}
-              </li>
+              <Card key={item.title}>
+                <CardContent>
+                  <Typography color="textSecondary" gutterBottom>
+                    {item.title}
+                  </Typography>
+                </CardContent>
+              </Card>
             ))}
-          </ul>
+          </div>
         )
       }
   };
 
 }
-
 
 
 class Timeline extends React.Component {
@@ -153,8 +160,10 @@ class Timeline extends React.Component {
     return (
       <div>
         <BookForm />
+        <br />
         <BookCards />
       </div>
+
     )
   }
 }
