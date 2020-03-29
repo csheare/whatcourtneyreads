@@ -19,20 +19,12 @@ CORS(app)
 
 from book import Book
 
-# @app.route('/', methods=['POST'])
-# def test():
-# 	body = json.loads(request.data)
-# 	player, move = body['player'], body['move']
-# 	print(f'Player {player} played an {move}')
-# 	return jsonify(body)
-
 @app.route('/new_book', methods=['POST'])
 def new_books():
 	body = json.loads(request.data)
 	title, author, start, end = body['params']['title'],\
 								body['params']['author'],\
-								body['params']['start'], \
-								body['params']['end']
+								body['params']['start']
 	# print the book
 	new_book = Book(title, author, start, end)
 	db.session.add(new_book)
@@ -50,8 +42,9 @@ def get_books():
 	{
 		'title': book.title,
 		'author': book.author,
-		'start': book.start,
-		'end': book.end
+		'month': book.start.month,
+		'year' : book.start.year,
+		'day' : book.start.day
 	}
 	for book in books]
 	return {'books': results}

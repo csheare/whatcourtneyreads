@@ -1,17 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Form, Button} from "react-bootstrap";
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
+import {Form, Button, Jumbotron, Container} from "react-bootstrap";
+import {
+  Timeline,
+  Content,
+  ContentYear,
+  ContentBody,
+  Description
+} from 'vertical-timeline-component-react';
+import styled from 'styled-components'
+import { space } from 'styled-system'
+
 import axios from "axios";
 import './index.css';
 
-function Book(){
-	return(
-		<p> This is a great book! </p>
-	);
-}
+
+const Spacer = styled.div(space)
 
 class BookForm extends React.Component {
   constructor(props) {
@@ -69,7 +73,7 @@ class BookForm extends React.Component {
 			<div>
 				<div>	
 					<h1>
-						<Book />
+						Add a Book Here!
 					</h1>
 				</div>
 				<div>
@@ -89,11 +93,6 @@ class BookForm extends React.Component {
               <Form.Control type="date" onChange={this.handleStartChange} />
             </Form.Group>
             <br />
-            <Form.Group>
-              <Form.Label for="end">End: </Form.Label>
-              <Form.Control type="date" onChange={this.handleEndChange} />
-            </Form.Group>
-            <br />
             <Button variant="primary" type="submit">
               Submit
             </Button>
@@ -105,12 +104,13 @@ class BookForm extends React.Component {
 	}
 }
 
-class BookCards extends React.Component {
-  constructor(props) {
+
+class Main extends React.Component {
+    constructor(props) {
     super(props);
     this.state = {
       isLoaded: false,
-      books_list: 'hi'
+      books_list: ''
     };
 
   }
@@ -127,43 +127,52 @@ class BookCards extends React.Component {
         console.log(res.data.books);
       });
   }
+    render() {
+      const { isLoaded, books_list } = this.state;
 
-  render() {
-    const { isLoaded, books_list } = this.state;
-    if (!isLoaded) {
-      return <div>Loading...</div>;
-    } else {
+      if (!isLoaded) {
+        return (<div>Loading...</div>);
+      } else {
         return (
           <div>
-            {books_list.map(item => (
-              <Card key={item.title}>
-                <CardContent>
-                  <Typography color="textSecondary" gutterBottom>
-                    {item.title}
-                  </Typography>
-                </CardContent>
-              </Card>
-            ))}
+            <Timeline>
+              {books_list.map(book => (
+                  <Content key={book.title}>
+                    <ContentYear 
+                      startMonth={book.month}
+                      startDay={book.day}
+                      startYear={book.year}
+                    />
+                    <ContentBody title={book.title}>
+                      Author: {book.author}
+                    </ContentBody>
+                  </Content>
+              ))}
+            </Timeline>
           </div>
-        )
+        );
       }
   };
-
 }
 
 
-class Timeline extends React.Component {
-  constructor(props) {
-    super(props);
-  };
+class FullTimeline extends React.Component {
   render() {
     return (
       <div>
-        <BookForm />
-        <br />
-        <BookCards />
-      </div>
+      
+      <Jumbotron fluid  background-color="red">
+        <Container>
+          <h1>What Courtney Reads</h1>
+          <p>
+            "The future will belong not only to the educated [wo]man, but to the [wo]man whis is educated to use [her] leisure wisely"
+          </p>
+        </Container>
+        </Jumbotron>
+<Spacer mb={4} />
 
+        <Main />
+      </div>
     )
   }
 }
@@ -174,6 +183,6 @@ class Timeline extends React.Component {
 
 
 ReactDOM.render(
-	<Timeline />,
+	<FullTimeline />,
 	document.getElementById('root')
 );
