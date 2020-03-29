@@ -105,37 +105,40 @@ class BookCards extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      books: ''
+      isLoaded: false,
+      books_list: 'hi'
     };
 
-    this.getBooks = this.getBooks.bind(this);
   }
 
-  getBooks(event) {
+  componentDidMount() {
     this.lastRequestCancelSource = axios.CancelToken.source();
     axios
       .get("http://localhost:5000/books"
       ).then(res => {
-        const books = res.data;
-        this.setState({books: books});
-        console.log(res);
-        console.log(res.data);
+        this.setState({
+            isLoaded: true,
+            books_list: res.data.books
+          });
+        console.log(res.data.books);
       });
-    event.preventDefault();
   }
 
   render() {
-    //this.getBooks()
-    return (
-      <div>
-        <p>
-        <Button onClick={this.getBooks}>
-          Get Books
-        </Button>
-        {this.state.books[0]}
-        </p>
-      </div>
-    )
+    const { isLoaded, books_list } = this.state;
+    if (!isLoaded) {
+      return <div>Loading...</div>;
+    } else {
+        return (
+          <ul>
+            {books_list.map(item => (
+              <li key={item.title}>
+                {item.title} by {item.author}
+              </li>
+            ))}
+          </ul>
+        )
+      }
   };
 
 }
