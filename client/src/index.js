@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Form, Button} from "react-bootstrap";
 import axios from "axios";
 import './index.css';
 
@@ -9,7 +10,7 @@ function Book(){
 	);
 }
 
-class Timeline extends React.Component {
+class BookForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -45,14 +46,17 @@ class Timeline extends React.Component {
   handleSubmit(event) {
   	this.lastRequestCancelSource = axios.CancelToken.source();
     axios
-      .get("http://localhost:5000/new_book", {
+      .post("http://localhost:5000/new_book", {
         params:{
-          title: this.state.title.value,
-          author: this.state.author.value,
-          start: this.state.start.value,
-          end: this.state.end.value
+          title: this.state.title,
+          author: this.state.author,
+          start: this.state.start,
+          end: this.state.end
         },
         cancelToken: this.lastRequestCancelSource.token
+      }).then(res => {
+        console.log(res);
+        console.log(res.data);
       });
     event.preventDefault();
   }
@@ -66,38 +70,92 @@ class Timeline extends React.Component {
 					</h1>
 				</div>
 				<div>
-					<form onSubmit={this.handleSubmit}>
-						<label for="title">
-              Book Title:
-               <input type="text" onChange={this.handleTitleChange}/>
-            </label>
-						<br></br>
-
-            <label for="author">
-                Author Name:
-               <input type="text" onChange={this.handleAuthorChange}/>
-            </label>
-            <br></br>
-
-            <label for="start">
-                Start:
-               <input type="text" onChange={this.handleStartChange}/>
-            </label>
-            <br></br>
-
-            <label for="end">
-                End:
-               <input type="text" onChange={this.handleEndChange}/>
-            </label>
-            <br></br>
-
-  					<input type="submit" value="Submit" />
-					</form>
+          <Form onSubmit={this.handleSubmit}>
+            <Form.Group>
+              <Form.Label for="title">Book Title: </Form.Label>
+              <Form.Control type="text" onChange={this.handleTitleChange} placeholder="The Hobbit" />
+            </Form.Group>
+            <br />
+            <Form.Group>
+              <Form.Label for="author">Author Name: </Form.Label>
+              <Form.Control type="text" onChange={this.handleAuthorChange} placeholder="J. R. R. Tolkien" />
+            </Form.Group>
+            <br />
+            <Form.Group>
+              <Form.Label for="start">Start: </Form.Label>
+              <Form.Control type="date" onChange={this.handleStartChange} />
+            </Form.Group>
+            <br />
+            <Form.Group>
+              <Form.Label for="end">End: </Form.Label>
+              <Form.Control type="date" onChange={this.handleEndChange} />
+            </Form.Group>
+            <br />
+            <Button variant="primary" type="submit">
+              Submit
+            </Button>
+          </Form> 
 				</div>
 			</div>
 		);
 	}
 }
+
+class BookCards extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      books: ''
+    };
+
+    this.getBooks = this.getBooks.bind(this);
+  }
+
+  getBooks(event) {
+    this.lastRequestCancelSource = axios.CancelToken.source();
+    axios
+      .get("http://localhost:5000/books"
+      ).then(res => {
+        const books = res.data;
+        this.setState({books: books});
+        console.log(res);
+        console.log(res.data);
+      });
+    event.preventDefault();
+  }
+
+  render() {
+    //this.getBooks()
+    return (
+      <div>
+        <p>
+        <Button onClick={this.getBooks}>
+          Get Books
+        </Button>
+        {this.state.books[0]}
+        </p>
+      </div>
+    )
+  };
+
+}
+
+
+
+class Timeline extends React.Component {
+  constructor(props) {
+    super(props);
+  };
+  render() {
+    return (
+      <div>
+        <BookForm />
+        <BookCards />
+      </div>
+    )
+  }
+}
+
 
 // ========================================
 
