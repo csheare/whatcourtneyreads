@@ -15,26 +15,20 @@ npm install
 ```
 
 
-# Server Set Up
+# Server Set Up (Dockerized)
 
 ```
 # inside of server directory
 
-python -m venv .venv
-source venv/bin/activate
-# BUT I HAVE THIS MY MY BASH RC BABY
-pip install -r requirements.txt
+create a .env file with the following format:
+
+POSTGRES_USER=*******
+POSTGRES_PW=*******
+
+docker build .
+docker run -it -p 5000:5000 --env-file .env <docker_image_hash>
 
 ```
-
-# Get that Database going girl?
-
-```
-Its dangerous to go alone, take this!
-export DATABASE_URL="postgresql:///whatcourtneyreads"
-export APP_SETTINGS="config.DevelopmentConfig"
-``` 
-
 
 
 # Running the app 
@@ -50,3 +44,7 @@ $ flask run
 $ cd client
 $ npm start
 ```
+
+Useful Articles for Project Write Up:
+
+https://pythonspeed.com/articles/docker-connection-refused/

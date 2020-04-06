@@ -53,7 +53,7 @@ class BookForm extends React.Component {
   handleSubmit(event) {
   	this.lastRequestCancelSource = axios.CancelToken.source();
     axios
-      .post("http://localhost:5000/new_book", {
+      .post("http://0.0.0.0:5000/new_book", {
         params:{
           title: this.state.title,
           author: this.state.author,
@@ -118,7 +118,7 @@ class Main extends React.Component {
   componentDidMount() {
     this.lastRequestCancelSource = axios.CancelToken.source();
     axios
-      .get("http://localhost:5000/books"
+      .get("http://0.0.0.0:5000/books"
       ).then(res => {
         this.setState({
             isLoaded: true,

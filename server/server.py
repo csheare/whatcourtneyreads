@@ -14,7 +14,7 @@ app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
-CORS(app)
+CORS(app, origins=['0.0.0.0:5000'])
 
 
 from book import Book
@@ -47,8 +47,14 @@ def get_books():
 		'day' : book.start.day
 	}
 	for book in books]
-	return {'books': results}
+	response =  jsonify({'books': results})
+	response.headers.add('Access-Control-Allow-Origin', '*')
+	return response
 
 @app.route('/')
 def hello():
 	return "hello"
+
+
+# if __name__ == '__main__':
+#     app.run(debug=True, host='0.0.0.0', port=5000)
