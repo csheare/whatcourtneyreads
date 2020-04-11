@@ -2,15 +2,15 @@ FROM python:3.6
 
 RUN apt-get update
 
-COPY server/ /server/
+COPY . /server
 
-WORKDIR /server
+WORKDIR ./server
 
 ENV APP_SETTINGS "config.DevelopmentConfig"
 ENV POSTGRES_URL "whatcourtneyreads.czmiceklckcp.us-east-2.rds.amazonaws.com:5432"
 ENV POSTGRES_DB "whatcourtneyreads"
 
-RUN pip install -r requirements.txt --no-cache-dir
+RUN pip install -r /server/requirements.txt --no-cache-dir
 
 ENV FLASK_ENV="docker"
 
