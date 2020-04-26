@@ -12,4 +12,4 @@ client:
 	docker run -it --rm -v ${PWD}:/client -v /client/node_modules -p 3001:3000 -e CHOKIDAR_USEPOLLING=true client:latest
 
 server:
-	docker run -it -p 5000:5000 --env-file .env server:latest
+	docker run -it -p 5000:8080 --env-file .env server:latest

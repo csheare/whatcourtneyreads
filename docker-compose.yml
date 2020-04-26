@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile
     image: server:latest
     ports:
-      - "5000:5000"
+      - "8080:5000"
     env_file:
       - ./server/.env
 
@@ -16,6 +16,6 @@ services:
       dockerfile: Dockerfile
     image: client:latest
     ports:
-      - '3000:3000'
+      - '8081:3000'
     depends_on:
       - "server"

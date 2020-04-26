@@ -26,7 +26,7 @@ POSTGRES_USER=*******
 POSTGRES_PW=*******
 
 docker build .
-docker run -it -p 5000:5000 --env-file .env <docker_image_hash>
+docker run -it -p 8080:500 --env-file .env <docker_image_hash>
 
 ```
 
