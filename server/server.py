@@ -38,6 +38,11 @@ def new_books():
 @app.route('/books', methods=['GET'])
 def get_books():
 	books = Book.query.all()
+
+	# first sort the books by date
+	books = sorted(books,key= lambda x: x.start, reverse=True)
+	
+
 	results = [ 
 	{
 		'title': book.title,
@@ -47,6 +52,9 @@ def get_books():
 		'day' : book.start.day
 	}
 	for book in books]
+
+
+
 	response =  jsonify({'books': results})
 	response.headers.add('Access-Control-Allow-Origin', '*')
 	return response
@@ -56,5 +64,5 @@ def hello():
 	return "hello"
 
 
-# if __name__ == '__main__':
-#     app.run(debug=True, host='0.0.0.0', port=5000)
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port=5000)
