@@ -18,6 +18,6 @@ ENV FLASK_APP=server.py
 
 EXPOSE 5000
 
-CMD ["flask", "run", "--host", "0.0.0.0"]
+CMD ["flask", "run", "--host", "0.0.0.0", "--cert", "adhoc"]
 
 
