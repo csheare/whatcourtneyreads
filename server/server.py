@@ -41,7 +41,6 @@ def get_books():
 
 	# first sort the books by date
 	books = sorted(books,key= lambda x: x.start, reverse=True)
-	
 
 	results = [ 
 	{
@@ -53,7 +52,7 @@ def get_books():
 	}
 	for book in books]
 
-
+	
 
 	response =  jsonify({'books': results})
 	response.headers.add('Access-Control-Allow-Origin', '*')
@@ -64,5 +63,5 @@ def hello():
 	return "hello"
 
 
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+# if __name__ == '__main__':
+#     app.run(debug=True, host='0.0.0.0', port=5000)
