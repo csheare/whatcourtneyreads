@@ -48,3 +48,8 @@ $ npm start
 Useful Articles for Project Write Up:
 
 https://pythonspeed.com/articles/docker-connection-refused/
+
+
+Todo:
+- Set up domain name: https://docs.aws.amazon.com/cloud9/latest/user-guide/app-preview.html#app-preview-share-get-metadata
+- For some reason, the db request is not working on aws?, but it works locally.
