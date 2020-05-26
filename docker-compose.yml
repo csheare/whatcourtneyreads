@@ -10,6 +10,16 @@ services:
     env_file:
       - ./server/.env
 
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    image: nginx:latest
+    ports:
+      - "80:80"
+    depends_on:
+     - "server"
+
   client:
     build:
       context: ./client

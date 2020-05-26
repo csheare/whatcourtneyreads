@@ -14,6 +14,12 @@ import { space } from 'styled-system'
 import axios from "axios";
 import './index.css';
 
+const https = require('https');
+const instance = axios.create({
+  httpsAgent: new https.Agent({  
+    rejectUnauthorized: false
+  })
+});
 
 const Spacer = styled.div(space)
 
@@ -52,8 +58,8 @@ class BookForm extends React.Component {
 
   handleSubmit(event) {
   	this.lastRequestCancelSource = axios.CancelToken.source();
-    axios
-      .post("https://0.0.0.0:8081/new_book", {
+    instance
+      .post("http://0.0.0.0:8081/new_book", {
         params:{
           title: this.state.title,
           author: this.state.author,
@@ -117,8 +123,8 @@ class Main extends React.Component {
 
   componentDidMount() {
     this.lastRequestCancelSource = axios.CancelToken.source();
-    axios
-      .get("https://0.0.0.0:8081/books"
+    instance
+      .get("http://0.0.0.0:8081/books"
       ).then(res => {
         this.setState({
             isLoaded: true,
