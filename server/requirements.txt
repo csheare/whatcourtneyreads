@@ -1,7 +1,7 @@
 alembic==1.4.2
 cffi==1.14.0
 click==7.1.1
-cryptography==2.9.2
+cryptography==3.2
 Flask==1.1.1
 Flask-Cors==3.0.8
 Flask-Migrate==2.5.2
